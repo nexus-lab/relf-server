@@ -9,6 +9,7 @@ config_lib.DEFINE_list("Artifacts.artifact_dirs", [
 ], "A list directories to load artifacts from.")
 
 config_lib.DEFINE_list("Artifacts.knowledge_base", [
+    "AndroidUserProfiles",
     "LinuxRelease",
     "LinuxUserProfiles",
     "MacOSUsers",
@@ -55,7 +56,8 @@ config_lib.DEFINE_list("Artifacts.knowledge_base_heavyweight",
 
 config_lib.DEFINE_list("Artifacts.interrogate_store_in_aff4", [
     "WMILogicalDisks", "RootDiskVolumeUsage", "WMIComputerSystemProduct",
-    "LinuxHardwareInfo", "OSXSPHardwareDataType"
+    "LinuxHardwareInfo", "OSXSPHardwareDataType",
+    "AndroidDeviceInfo",
 ], "Artifacts to collect during interrogate that don't"
                        " populate the knowledgebase, but store results "
                        "elsewhere in aff4.")

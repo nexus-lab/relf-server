@@ -61,7 +61,8 @@ class ForemanOsClientRule(ForemanClientRuleBase):
 
     return ((self.os_windows and value.startswith("Windows")) or
             (self.os_linux and value.startswith("Linux")) or
-            (self.os_darwin and value.startswith("Darwin")))
+            (self.os_darwin and value.startswith("Darwin")) or
+            (self.os_android and value.startswith("Android")))
 
   def Validate(self):
     pass

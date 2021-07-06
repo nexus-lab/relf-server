@@ -757,7 +757,7 @@ class Artifact(structs.RDFProtoStruct):
           "Artifacts using the Rekall memory forensics framework.",
   }
 
-  SUPPORTED_OS_LIST = ["Windows", "Linux", "Darwin"]
+  SUPPORTED_OS_LIST = ["Windows", "Linux", "Darwin", "Android"]
 
   def ToJson(self):
     artifact_dict = self.ToPrimitiveDict()

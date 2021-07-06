@@ -1,0 +1,172 @@
+# Android flow templates.
+
+name: AndroidUserProfiles
+doc: Information about Android device users.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: EnumerateUsers}
+labels: [Users]
+provides: [users.homedir, users.username, users.uid]
+supported_os: [Android]
+---
+name: AndroidDeviceInfo
+doc: Android device hardware information and basic OS information.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidDeviceInfo}
+    returned_types: [AndroidDeviceInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidPackages
+doc: A list of all Android installed/uninstalled packages and details.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidPackages}
+    returned_types: [AndroidPackageInfo]
+labels: [Software]
+supported_os: [Android]
+---
+name: AndroidBatteryInfo
+doc: Android battery information including voltage, power source, temperate, health, etc.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidBatteryInfo}
+    returned_types: [AndroidBatteryInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidStorageInfo
+doc: Android storage volume information including folder path, volume size etc.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidStorageInfo}
+    returned_types: [AndroidStorageInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidWiFiInfo
+doc: WiFi adapter status, saved WiFi networks, and WiFi scanning results of an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidWiFiInfo}
+    returned_types: [AndroidWiFiInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidTelephonyInfo
+doc: Telephony information of an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidTelephonyInfo}
+    returned_types: [AndroidTelephonyInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidBluetoothInfo
+doc: Information about the on-board Bluetooth device and bonded or nearby Bluetooth devices.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidBluetoothInfo}
+    returned_types: [AndroidBluetoothInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidLocation
+doc: The location of an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidLocation}
+    returned_types: [AndroidLocation]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidSystemSettings
+doc: System settings of the Android OS
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidSystemSettings}
+    returned_types: [AndroidSystemSettings]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidSensorInfo
+doc: Details about all sensors on an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidSensorInfo}
+    returned_types: [AndroidSensorInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidNfcInfo
+doc: Get NFC hardware information of an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidNfcInfo}
+    returned_types: [AndroidNfcInfo]
+labels: [System]
+supported_os: [Android]
+---
+name: AndroidContactInfo
+doc: All contact information on an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidContacts}
+    returned_types: [AndroidContactInfo]
+labels: [Software]
+supported_os: [Android]
+---
+name: AndroidCallLogs
+doc: Detail information of all the phone calls on an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidCallLogs}
+    returned_types: [AndroidCallLog]
+labels: [Software]
+supported_os: [Android]
+---
+name: AndroidMessages
+doc: Short messages (SMS and MMS) stored on an Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidMessages}
+    returned_types: [AndroidSmsMms]
+labels: [Software]
+supported_os: [Android]
+---
+name: AndroidAccounts
+doc: Online accounts of an Android user.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidAccounts}
+    returned_types: [AndroidAccountInfo]
+labels: [Software]
+supported_os: [Android]
+---
+name: AndroidVpnProfiles
+doc: Android VPN profiles.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidVpnProfiles}
+    returned_types: [AndroidVpnProfile]
+labels: [Software]
+supported_os: [Android]
+---
+name: EnumerateLinuxUsers
+doc: Linux users on the Android device.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: EnumerateLinuxUsers}
+    returned_types: [User]
+labels: [Users]
+supported_os: [Android]
+---
+name: AdvancedAndroidUserProfiles
+doc: Detailed user profiles of a multi-user Android OS.
+sources:
+  - type: GRR_CLIENT_ACTION
+    attributes: {client_action: GetAndroidUserProfiles}
+    returned_types: [AndroidUserProfile]
+labels: [Users]
+supported_os: [Android]

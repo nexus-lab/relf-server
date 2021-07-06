@@ -8,13 +8,14 @@ set -e
 
 run_component() {
   COMPONENT=$1; shift
-  grr_server --component "${COMPONENT}" --disallow_missing_config_definitions "$@"
+  grr_server --context "Global Install Context" --component "${COMPONENT}" --disallow_missing_config_definitions "$@"
 }
 
 initialize() {
-  if [[ ! -e "${VIRTUALENV}/install_data/etc/server.local.yaml" ]]; then
+  if [[ ! -e "/etc/grr/server.local.yaml" ]]; then
     if [[ "${EXTERNAL_HOSTNAME}" ]] && [[ "${ADMIN_PASSWORD}" ]]; then
-      grr_config_updater initialize --noprompt --external_hostname="$EXTERNAL_HOSTNAME" --admin_password="$ADMIN_PASSWORD"
+      grr_config_updater --context "Global Install Context" set_var Config.prefix ""
+      grr_config_updater --context "Global Install Context" initialize --noprompt --external_hostname="$EXTERNAL_HOSTNAME" --admin_password="$ADMIN_PASSWORD" --norepack_templates
     else
       echo "initialize hasn't run and EXTERNAL_HOSTNAME/ADMIN_PASSWORD not set"
       exit 1
@@ -23,9 +24,7 @@ initialize() {
 }
 
 APPLICATION=$1;
-VIRTUALENV="/usr/share/grr-server/"
 if [[ ${APPLICATION} = 'grr' ]]; then
-  source "${VIRTUALENV}/bin/activate"
 
   if [[ "$#" -eq 1 ]]; then
     # Run all components in the same container. This is only useful for

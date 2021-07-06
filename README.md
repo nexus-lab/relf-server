@@ -1,3 +1,22 @@
+# ReLF Server
+
+This is a modified GRR Server for **ReLF: Scalable Remote Live Forensics for Android**.
+
+To install and run this server, you may follow the original GRR documentation below, or
+use our prebuilt Docker container for your convenience.
+
+```shell
+docker run \
+    --name relf-server \
+    -p 0.0.0.0:8000:8000 \
+    -p 0.0.0.0:8080:8080 \
+    -e EXTERNAL_HOSTNAME="localhost" \
+    -e ADMIN_PASSWORD="demo" \
+    ghcr.io/nexus-lab/relf-server
+```
+
+---
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/google/grr/gh-pages/img/grr_logo_real_sm.png" />
 

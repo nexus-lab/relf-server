@@ -19,6 +19,7 @@ from grr.lib.rdfvalues import paths as rdf_paths
 from grr.lib.rdfvalues import plist as rdf_plist
 from grr.lib.rdfvalues import protodict as rdf_protodict
 from grr.lib.rdfvalues import rdf_yara
+from grr.lib.rdfvalues import android
 
 
 class ClientActionStub(object):
@@ -436,6 +437,138 @@ class YaraProcessDump(ClientActionStub):
   in_rdfvalue = rdf_yara.YaraProcessDumpArgs
   out_rdfvalues = [rdf_yara.YaraProcessDumpResponse]
 
+
+class GetAndroidDeviceInfo(ClientActionStub):
+  """Retrieve Android device information."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidDeviceInfo]
+
+
+class GetAndroidPackages(ClientActionStub):
+  """Retrieve Android device information."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidPackageInfo]
+
+
+class GetAndroidBatteryInfo(ClientActionStub):
+  """Retrieve Android device information."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidBatteryInfo]
+
+
+class GetAndroidStorageInfo(ClientActionStub):
+  """Retrieve Android storage volume information."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidStorageInfo]
+
+
+class GetAndroidWiFiInfo(ClientActionStub):
+  """Retrieve WiFi adapter status, saved WiFi networks, and WiFi scanning results of an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidWiFiInfo]
+
+
+class GetAndroidTelephonyInfo(ClientActionStub):
+  """Retrieve telephony information like carrier, phone number, neighboring cells of an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidTelephonyInfo]
+
+
+class GetAndroidBluetoothInfo(ClientActionStub):
+  """Retrieve information about the on-board Bluetooth device and bonded or nearby Bluetooth devices."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidBluetoothInfo]
+
+
+class GetAndroidContacts(ClientActionStub):
+  """Retrieve all contact information from an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidContactInfo]
+
+
+class GetAndroidCallLogs(ClientActionStub):
+  """Retrieve all the phone calls on an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidCallLog]
+
+
+class GetAndroidMessages(ClientActionStub):
+  """Retrieve all short messages (SMS and MMS) stored on an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidSmsMms]
+
+
+class GetAndroidLocation(ClientActionStub):
+  """Get the location of an Android device by GPS or network."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidLocation]
+
+
+class GetAndroidSystemSettings(ClientActionStub):
+  """Get system settings of the Android OS."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidSystemSettings]
+
+
+class GetAndroidSensorInfo(ClientActionStub):
+  """Get details about all sensors on an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidSensorInfo]
+
+
+class GetAndroidSensorData(ClientActionStub):
+  """Get sensor data of a specific sensor on an Android device for a duration."""
+
+  in_rdfvalue = android.AndroidSensorDataRequest
+  out_rdfvalues = [android.AndroidSensorDataResponse]
+
+
+class GetAndroidNfcInfo(ClientActionStub):
+  """Get NFC hardware information of an Android device."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidNfcInfo]
+
+
+class GetAndroidAccounts(ClientActionStub):
+  """Get online accounts of an Android user."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidAccountInfo]
+
+
+class GetAndroidUserProfiles(ClientActionStub):
+  """Get information about Android device users."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidUserProfile]
+
+
+class GetAndroidVpnProfiles(ClientActionStub):
+  """Get Android VPN profiles."""
+
+  in_rdfvalue = None
+  out_rdfvalues = [android.AndroidVpnProfile]
+
+
+class EnumerateLinuxUsers(ClientActionStub):
+  """Get all Linux users on an Android OS"""
+
+  in_rdfvalue = None
+  out_rdfvalues = [rdf_client.User]
 
 # Rekall constants as defined in rekall/constants.py.
 REKALL_PROFILE_REPOSITORY_VERSION = "v1.0"

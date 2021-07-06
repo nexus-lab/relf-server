@@ -35,7 +35,7 @@ grrUi.artifact.artifactsListFormDirective.ArtifactsListFormController =
   this.selectedName;
 
   /** @export {Array<string>} */
-  this.platforms = ['', 'Darwin', 'Linux', 'Windows'];
+  this.platforms = ['', 'Darwin', 'Linux', 'Windows', 'Android'];
 
   /** @export {string} */
   this.selectedPlatform = '';

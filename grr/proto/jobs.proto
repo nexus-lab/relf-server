@@ -1512,6 +1512,7 @@ message ForemanOsClientRule {
   optional bool os_windows = 1;
   optional bool os_linux = 2;
   optional bool os_darwin = 3;
+  optional bool os_android = 4;
 }
 
 // This rule will fire if the client has the selected label.

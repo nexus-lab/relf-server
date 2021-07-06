@@ -5,6 +5,7 @@ import "grr/proto/jobs.proto";
 import "grr/proto/knowledge_base.proto";
 import "grr/proto/semantic.proto";
 import "grr/proto/sysinfo.proto";
+import "grr/proto/android.proto";
 
 
 //
@@ -63,6 +64,7 @@ message ApiClient {
       description: "Age of the client information."
     }];
   optional CloudInstance cloud_instance = 19;
+  optional AndroidDeviceInfo android_device_info = 20;
 }
 
 message ApiClientActionRequest {

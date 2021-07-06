@@ -16,57 +16,60 @@
 
 FROM ubuntu:xenial
 
-LABEL maintainer="grr-dev@googlegroups.com"
+LABEL org.opencontainers.image.source https://github.com/nexus-lab/relf-server
 
-ENV GRR_VENV /usr/share/grr-server
-ENV PROTOC /usr/share/protobuf/bin/protoc
+WORKDIR /grr
 
-SHELL ["/bin/bash", "-c"]
+SHELL [ "/bin/bash", "-c" ]
 
 RUN apt-get update && \
-  apt-get install -y \
-  debhelper \
-  default-jre \
-  dpkg-dev \
-  git \
-  libffi-dev \
-  libssl-dev \
-  python-dev \
-  python-pip \
-  rpm \
-  wget \
-  zip
+    apt-get install -y \
+    fakeroot \
+    debhelper \
+    libffi-dev \
+    libssl-dev \
+    python-dev \
+    python-pip \
+    openjdk-8-jdk \
+    zip \
+    git \
+    devscripts \
+    dh-systemd \
+    libc6-i386 \
+    lib32z1 \
+    curl && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade --no-cache-dir pip virtualenv && virtualenv $GRR_VENV
+RUN curl -fsSL https://deb.nodesource.com/setup_7.x | /bin/bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install proto compiler
-RUN mkdir -p /usr/share/protobuf && \
-cd /usr/share/protobuf && \
-wget --quiet "https://github.com/google/protobuf/releases/download/v3.3.0/protoc-3.3.0-linux-x86_64.zip" && \
-unzip protoc-3.3.0-linux-x86_64.zip && \
-rm protoc-3.3.0-linux-x86_64.zip
+RUN pip install pip==20.3.4
 
-# TODO(ogaro) Stop hard-coding the node version to install
-# when a Linux node-sass binary compatible with node v8.0.0 is
-# available: https://github.com/sass/node-sass/pull/1969
-RUN $GRR_VENV/bin/pip install --upgrade --no-cache-dir wheel six setuptools nodeenv && \
-    $GRR_VENV/bin/nodeenv -p --prebuilt --node=7.10.0 && \
-    echo '{ "allow_root": true }' > /root/.bowerrc
+RUN cd /usr && \
+    curl -fsSLO "https://github.com/google/protobuf/releases/download/v3.3.0/protoc-3.3.0-linux-x86_64.zip" && \
+    unzip protoc-3.3.0-linux-x86_64.zip && \
+    rm protoc-3.3.0-linux-x86_64.zip
 
-# Copy the GRR code over.
-ADD . /usr/src/grr
+ADD . /grr
 
-RUN cd /usr/src/grr && /usr/src/grr/docker/install_grr_from_gcs.sh
+RUN pip install --no-cache-dir -e . && \
+    pip install --no-cache-dir -e grr/config/grr-response-client/ && \
+    pip install --no-cache-dir -e api_client/python/ && \
+    pip install --no-cache-dir -e grr/config/grr-response-server/ && \
+    pip install --no-cache-dir -e grr/config/grr-response-test/ && \
+    python makefile.py && \
+    cd grr/artifacts && python makefile.py && cd -
 
-ENTRYPOINT ["/usr/src/grr/scripts/docker-entrypoint.sh"]
+RUN mkdir -p /etc/grr && cp install_data/etc/* /etc/grr
 
-# Port for the admin UI GUI
 EXPOSE 8000
-
-# Port for clients to talk to
 EXPOSE 8080
 
-# Server config, logs, sqlite db
-VOLUME ["/etc/grr", "/var/log", "/var/grr-datastore"]
+VOLUME /etc/grr
+VOLUME /var/log
+VOLUME /var/grr-datastore
 
-CMD ["grr"]
+ENTRYPOINT [ "/grr/scripts/docker-entrypoint.sh" ]
+
+CMD [ "grr" ]

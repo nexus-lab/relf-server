@@ -10,7 +10,7 @@ import time
 from grr.client.components.rekall_support import rekall_types as rdf_rekall_types
 from grr.lib import rdfvalue
 from grr.lib import registry
-from grr.lib.rdfvalues import client as rdf_client
+from grr.lib.rdfvalues import client as rdf_client, android
 from grr.lib.rdfvalues import cloud
 from grr.lib.rdfvalues import crypto as rdf_crypto
 from grr.lib.rdfvalues import flows as rdf_flows
@@ -189,8 +189,12 @@ class VFSGRRClient(standard.VFSDirectory):
     HARDWARE_INFO = aff4.Attribute(
         "aff4:hardware_info",
         rdf_client.HardwareInfo,
-        "Various hardware information.",
-        default=rdf_client.HardwareInfo())
+        "Various hardware information.")
+
+    ANDROID_DEVICE_INFO = aff4.Attribute(
+        "aff4:android_device_info",
+        android.AndroidDeviceInfo,
+        "Android hardware and system information")
 
     MEMORY_SIZE = aff4.Attribute("aff4:memory_size", rdfvalue.ByteSize,
                                  "Amount of memory this client's machine has.")

@@ -135,6 +135,8 @@ class ChromeHistory(flow.GRRFlow):
       path = "{homedir}/Library/Application Support/{sw}/Default/"
       for sw_path in ["Google/Chrome", "Chromium"]:
         paths.append(path.format(homedir=user_info.homedir, sw=sw_path))
+    elif system == "Android":
+      paths.append("{homedir}/com.android.chrome/app_chrome/Default/".format(homedir=user_info.homedir))
     else:
       raise OSError("Invalid OS for Chrome History")
     return paths
@@ -184,7 +186,12 @@ class FirefoxHistory(flow.GRRFlow):
       if not self.state.history_paths:
         raise flow.FlowError("Could not find valid History paths.")
 
-    filename = "places.sqlite"
+    fd = aff4.FACTORY.Open(self.client_id, token=self.token)
+    system = fd.Get(fd.Schema.SYSTEM)
+    if system == "Android":
+      filename = "browser.db"
+    else:
+      filename = "places.sqlite"
     for path in self.state.history_paths:
       self.CallFlow(
           file_finder.FileFinder.__name__,
@@ -197,11 +204,16 @@ class FirefoxHistory(flow.GRRFlow):
   @flow.StateHandler()
   def ParseFiles(self, responses):
     """Take each file we retrieved and get the history from it."""
+    fd = aff4.FACTORY.Open(self.client_id, token=self.token)
+    system = fd.Get(fd.Schema.SYSTEM)
     if responses:
       for response in responses:
         fd = aff4.FACTORY.Open(
             response.stat_entry.AFF4Path(self.client_id), token=self.token)
-        hist = firefox3_history.Firefox3History(fd)
+        if system == "Android":
+          hist = firefox3_history.FirefoxAndroidHistory(fd)
+        else:
+          hist = firefox3_history.Firefox3History(fd)
         count = 0
         for epoch64, dtype, url, dat1, in hist.Parse():
           count += 1
@@ -242,6 +254,8 @@ class FirefoxHistory(flow.GRRFlow):
     elif system == "Darwin":
       path = ("{homedir}/Library/Application Support/" "Firefox/Profiles/")
       paths.append(path.format(homedir=user_info.homedir))
+    elif system == "Android":
+      paths.append("{homedir}/org.mozilla.firefox/files/mozilla/".format(homedir=user_info.homedir))
     else:
       raise OSError("Invalid OS for Chrome History")
     return paths
@@ -270,6 +284,10 @@ BROWSER_PATHS = {
             "{homedir}/Library/Application Support/Google/Chrome/",
             "{homedir}/Library/Application Support/Chromium/"
         ]
+    },
+    "Android": {
+        "Firefox": ["{homedir}/com.android.chrome/"],
+        "Chrome": ["{homedir}/org.mozilla.firefox/"]
     }
 }
 

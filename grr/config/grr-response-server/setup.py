@@ -76,6 +76,7 @@ setup_args = dict(
     install_requires=[
         "google-api-python-client==1.6.2",
         "google-auth==1.2.1",
+        "googleapis-common-protos==1.5.2",
         "google-cloud-bigquery==0.22.1",
         "google-cloud-bigtable==0.22.0",
         "grr-response-core==%s" % VERSION.get("Version", "packagedepends"),
@@ -86,6 +87,8 @@ setup_args = dict(
         "python-debian==0.1.31",
         "Werkzeug==0.11.3",
         "wsgiref==0.1.2",
+        "rsa==4.3",
+        "httplib2==0.18.1"
     ],
     extras_require={
         # This is an optional component. Install to get MySQL data

@@ -62,6 +62,7 @@
           <i class="fa fa-linux" ng-if="controller.client.value.os_info.value.system.value == 'Linux'"></i>
           <i class="fa fa-windows" ng-if="controller.client.value.os_info.value.system.value == 'Windows'"></i>
           <i class="fa fa-apple" ng-if="controller.client.value.os_info.value.system.value == 'Apple'"></i>
+          <i class="fa fa-android" ng-if="controller.client.value.os_info.value.system.value == 'Android'"></i>
 
           <grr-semantic-value value="controller.client.value.os_info.value.system"></grr-semantic-value>
           <span ng-if="controller.client.value.os_info.value.system.value && (controller.client.value.os_info.value.release.value || controller.client.value.os_info.value.version.value)">,</span>

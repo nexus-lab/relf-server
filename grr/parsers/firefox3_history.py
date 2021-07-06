@@ -63,6 +63,22 @@ class Firefox3History(sqlite_file.SQLiteFile):
       yield [timestamp, "FIREFOX3_VISIT", url, title]
 
 
+class FirefoxAndroidHistory(sqlite_file.SQLiteFile):
+  """Class for handling the parsing of a Android Firefox history file (places.sqlite).
+
+  Returns results in chronological order
+  """
+  VISITS_QUERY = ("SELECT date, url, title FROM history ORDER BY date ASC;")
+
+  def Parse(self):
+    """Iterator returning dict for each entry in history."""
+    for timestamp, url, title in self.Query(self.VISITS_QUERY):
+      if not isinstance(timestamp, (long, int)):
+        timestamp = 0
+
+      yield [timestamp * 1e3, "FIREFOX_ANDROID_VISIT", url, title]
+
+
 def main(argv):
   if len(argv) < 2:
     print "Usage: %s places.sqlite" % __program__

@@ -9,7 +9,7 @@ from grr.gui import api_call_handler_utils
 from grr.gui.api_plugins import stats as api_stats
 from grr.lib import rdfvalue
 from grr.lib import utils
-from grr.lib.rdfvalues import aff4_rdfvalues
+from grr.lib.rdfvalues import aff4_rdfvalues, android
 from grr.lib.rdfvalues import client as rdf_client
 from grr.lib.rdfvalues import cloud
 from grr.lib.rdfvalues import flows
@@ -76,6 +76,7 @@ class ApiClient(rdf_structs.RDFProtoStruct):
       rdf_client.Uname,
       rdf_client.User,
       rdf_client.Volume,
+      android.AndroidDeviceInfo,
   ]
 
   def InitFromAff4Object(self, client_obj):
@@ -84,6 +85,7 @@ class ApiClient(rdf_structs.RDFProtoStruct):
 
     self.agent_info = client_obj.Get(client_obj.Schema.CLIENT_INFO)
     self.hardware_info = client_obj.Get(client_obj.Schema.HARDWARE_INFO)
+    self.android_device_info = client_obj.Get(client_obj.Schema.ANDROID_DEVICE_INFO)
     self.os_info = rdf_client.Uname(
         system=client_obj.Get(client_obj.Schema.SYSTEM),
         node=client_obj.Get(client_obj.Schema.HOSTNAME),

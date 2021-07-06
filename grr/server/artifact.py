@@ -624,6 +624,8 @@ class GRRArtifactMappings(object):
                           "INSTALLED_PACKAGES", "Append"),
       "Volume": ("", aff4_grr.VFSGRRClient.__name__, "VOLUMES", "Append"),
       "HardwareInfo": ("", aff4_grr.VFSGRRClient.__name__, "HARDWARE_INFO",
+                       "Overwrite"),
+      "AndroidDeviceInfo": ("", aff4_grr.VFSGRRClient.__name__, "ANDROID_DEVICE_INFO",
                        "Overwrite")
   }
 
